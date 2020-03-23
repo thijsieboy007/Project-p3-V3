@@ -69,7 +69,7 @@ public class GameManager : MonoBehaviour
         Debug.Log(hardq[HardNumber].answer);
     }
 
-    public void test0()
+    public void Buttoneasy()
     {
         difficulty = 0;
         
@@ -87,7 +87,7 @@ public class GameManager : MonoBehaviour
         Debug.Log(easyq[easyNumber].answer);
     }
 
-    public void test1()
+    public void Buttonmedium()
     {
         difficulty = 1;
         easy.gameObject.SetActive(false);
@@ -103,7 +103,7 @@ public class GameManager : MonoBehaviour
         Debug.Log(mediumq[mediumNumber].answer);
     }
 
-    public void test2()
+    public void Buttonhard()
     {
         difficulty = 2;
         easy.gameObject.SetActive(false);
