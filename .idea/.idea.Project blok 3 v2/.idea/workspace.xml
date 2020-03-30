@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="02e153ff-5cf9-4d30-beb4-0f58c0a9f088" name="Default Changelist" comment="" />
+    <list default="true" id="02e153ff-5cf9-4d30-beb4-0f58c0a9f088" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Project blok 3 v2/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Project blok 3 v2/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/game.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/game.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/scripts/GameManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/scripts/GameManager.cs" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,10 +27,12 @@
     </option>
   </component>
   <component name="ProjectId" id="1ZLlnRpt24OCTtORbqRRVmOoUWr" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
     <property name="Rider.DefaultBreakpoints.AreToggled" value="true" />
     <property name="Rider.ProjectViewActivator.IsNotFirstRun" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="nodejs_package_manager_path" value="npm" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -55,11 +61,27 @@
       <workItem from="1584964708497" duration="1740000" />
       <workItem from="1584967632773" duration="759000" />
       <workItem from="1584970968062" duration="5001000" />
+      <workItem from="1584986433997" duration="6332000" />
+      <workItem from="1585223161400" duration="6562000" />
+      <workItem from="1585567368307" duration="2854000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <option name="LOCAL_CHANGES_DETAILS_PREVIEW_SHOWN" value="true" />

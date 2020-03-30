@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour
@@ -14,6 +15,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private InputField answerfield;
 
     private int goodAnswers;
+    private int score;
 
     public Button easy;
     public Button medium;
@@ -22,10 +24,11 @@ public class GameManager : MonoBehaviour
     public GameObject img;
     public GameObject start;
     public GameObject text;
+    public TextMeshProUGUI scoretext;
 
-    private bool easyerror;
-    private bool mediumerror;
-    private bool harderror;
+    private int TimerValue0 = 120;
+    private int TimerValue1 = 90;
+    private int TimerValue2 = 60;
 
     private int easyNumber;
     private int mediumNumber;
@@ -36,76 +39,49 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        Updatescore(0);
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Updatescore(int scoreToAdd)
     {
-
+        score += scoreToAdd;
+        scoretext.text = "Score:" + score;
     }
 
-    void NextQuestion0()
-    {
-        easyq.RemoveAt(easyNumber);
-        easyNumber = Random.Range(0, easyq.Count);
-        questionImage.sprite = easyq[easyNumber].picture;
-        Debug.Log(easyq[easyNumber].answer);
+    // dit zorgt ervoor dat er een random vraag met het bij behoorende plaatje uit de lijst word gehaalt en dat als die geweest
+    // is die vraag verwijdert word zodat hij niet nog een keer voorkomt.
+    private void NextQuestion(List<Question> questionList,ref int questionIndex){
+        questionList.RemoveAt(questionIndex);
+        questionIndex = Random.Range(0, questionList.Count);
+        questionImage.sprite = questionList[questionIndex].picture;
+        Debug.Log(questionList[questionIndex].answer);
     }
 
-    void NextQuestion1()
-    {
-        mediumq.RemoveAt(mediumNumber);
-        mediumNumber = Random.Range(0, mediumq.Count);
-        questionImage.sprite = mediumq[mediumNumber].picture;
-        Debug.Log(mediumq[mediumNumber].answer);
-    }
-
-    void NextQuestion2()
-    {
-        hardq.RemoveAt(HardNumber);
-        HardNumber = Random.Range(0, hardq.Count);
-        questionImage.sprite = hardq[HardNumber].picture;
-        Debug.Log(hardq[HardNumber].answer);
-    }
-
+    // Als je op de easy knop drukt krijg je vragen uit de easyq lijt en als je op enter drukt gaat hij naar de volgende.
     public void Buttoneasy()
     {
-        difficulty = 0;
-        
-        easy.gameObject.SetActive(false);
-        medium.gameObject.SetActive(false);
-        hard.gameObject.SetActive(false);
-        img.gameObject.SetActive(true);
-        background.gameObject.SetActive(true);
-        start.gameObject.SetActive(false);
-        text.gameObject.SetActive(true);
-        
-        easyerror = false;
-        easyNumber = Random.Range(0, easyq.Count);
-        questionImage.sprite = easyq[easyNumber].picture;
-        Debug.Log(easyq[easyNumber].answer);
+        button(0);
+        NextQuestion(easyq, ref easyNumber);
     }
 
+    // Als je op de medium knop drukt krijg je vragen uit de mediumq lijt en als je op enter drukt gaat hij naar de volgende.
     public void Buttonmedium()
     {
-        difficulty = 1;
-        easy.gameObject.SetActive(false);
-        medium.gameObject.SetActive(false);
-        hard.gameObject.SetActive(false);
-        img.gameObject.SetActive(true);
-        background.gameObject.SetActive(true);
-        start.gameObject.SetActive(false);
-        text.gameObject.SetActive(true);
-        mediumerror = false;
-        mediumNumber = Random.Range(0, easyq.Count);
-        questionImage.sprite = mediumq[mediumNumber].picture;
-        Debug.Log(mediumq[mediumNumber].answer);
+        button(1);
+        NextQuestion(mediumq,ref mediumNumber);
     }
 
+    // Als je op de hard knop drukt krijg je vragen uit de hardq lijt en als je op enter drukt gaat hij naar de volgende.
     public void Buttonhard()
     {
-        difficulty = 2;
+        button(2);
+        NextQuestion(hardq,ref HardNumber);
+    }
+
+    // dit zorgt ervoor dat de juiste objecten zichtbaar worden zodat als je op een knop drukt je niet op het main menu blijft.
+    private void button(int difficultyCount)
+    {
+        difficulty = difficultyCount;
         easy.gameObject.SetActive(false);
         medium.gameObject.SetActive(false);
         hard.gameObject.SetActive(false);
@@ -113,59 +89,64 @@ public class GameManager : MonoBehaviour
         background.gameObject.SetActive(true);
         start.gameObject.SetActive(false);
         text.gameObject.SetActive(true);
-        harderror = false;
-        HardNumber = Random.Range(0, hardq.Count);
-        questionImage.sprite = hardq[HardNumber].picture;
-        Debug.Log(hardq[HardNumber].answer);
+        Updatescore(0);
+        score = 0;
     }
+
 
     public void CheckAnswer()
     {
-        if (answerfield.text == easyq[easyNumber].answer && difficulty == 0)
+        if (difficulty == 0)
         {
-            Debug.Log("U ingevulde antwoord is juist");
-            NextQuestion0();
-            easyerror = true;
-            answerfield.text = "";
-        }
-        else if (easyerror)
-        {
-            Debug.Log("U ingevulde antwoord is onjuist");
-            NextQuestion0();
-            answerfield.text = "";
-
-        }
-
-        if (answerfield.text == mediumq[mediumNumber].answer && difficulty == 1)
-        {
-            Debug.Log("U ingevulde antwoord is juist");
-            NextQuestion1();
-            answerfield.text = "";
-            mediumerror = true;
-        }
-        else if (mediumerror)
-        {
-            Debug.Log("U ingevulde antwoord is onjuist");
-            NextQuestion1();
-            answerfield.text = "";
-
+            var b = answerfield.text == easyq[easyNumber].answer;
+            string s = b ? "juist" : "onjuist";
+            Debug.Log($"U ingevulde antwoord is {s}");
+            if (b)
+            {
+                Updatescore(25);
+            }
+            else
+            {
+                Updatescore(-5);
+            }
+            NextQuestion(easyq,ref easyNumber);    
         }
 
-        if (answerfield.text == hardq[HardNumber].answer && difficulty == 2)
+        if (difficulty == 1)
         {
-            Debug.Log("U ingevulde antwoord is juist");
-            NextQuestion2();
-            answerfield.text = "";
-            harderror = true;
+            var b = answerfield.text == mediumq[mediumNumber].answer;
+            string s = b ? "juist" : "onjuist";
+            Debug.Log($"U ingevulde antwoord is {s}");
+            if (b)
+            {
+                Updatescore(20);
+            }
+            else
+            {
+                Updatescore(-10);
+            }
+            NextQuestion(mediumq,ref mediumNumber);
         }
-        else if (harderror)
-        {
-            Debug.Log("U ingevulde antwoord is onjuist");
-            NextQuestion2();
-            answerfield.text = "";
 
+        if (difficulty == 2)
+        {
+            var b = answerfield.text == hardq[HardNumber].answer;
+            string s = b ? "juist" : "onjuist";
+            Debug.Log($"U ingevulde antwoord is {s}");
+            if (b)
+            {
+                Updatescore(20);
+            }
+            else
+            {
+                Updatescore(-20);
+            }
+            NextQuestion(hardq,ref HardNumber);
         }
+
+        answerfield.text = "";
     }
-} 
+}
+
         
     
